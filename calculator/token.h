@@ -43,10 +43,6 @@ static enumName enumstr(#__VA_ARGS__);
 
 DECLARE_ENUM(tokenType, enumTokenName, number, plusOp, minusOp, mulOp, divOp, lpToken, rpToken, unknownToken);
 
-//enum tokenType : int {
-//	number, plusOp, minusOp, mulOp, divOp, lpToken, rpToken, unknownToken
-//};
-
 class Token {
 private:
 	tokenType type;
@@ -59,5 +55,6 @@ public:
 	Token(int value);
 
 	int getValue();
+	tokenType getType();
 	void print();
 };

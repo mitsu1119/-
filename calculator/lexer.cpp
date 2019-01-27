@@ -8,7 +8,7 @@ std::vector<Token> Lexer::lex() {
 	int currentPos = 0;
 	char c;
 
-	while(currentPos < this->formula.size()) {
+	while((unsigned int)currentPos < this->formula.size()) {
 		c = this->formula[currentPos++];
 		if(std::isspace(c)) continue;		// スペースの読み飛ばし
 

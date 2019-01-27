@@ -115,12 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AST.cpp" />
     <ClCompile Include="lexer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parser.cpp" />
     <ClCompile Include="token.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AST.h" />
     <ClInclude Include="lexer.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="token.h" />

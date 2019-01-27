@@ -38,6 +38,10 @@ int Token::getValue() {
 	return this->value;
 }
 
+tokenType Token::getType() {
+	return this->type;
+}
+
 void Token::print() {
 	std::cout << std::left << std::setw(10) << enumTokenName[this->type] << " : " << this->str << std::endl;
 }
