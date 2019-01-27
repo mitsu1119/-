@@ -4,6 +4,7 @@ Parser::Parser(std::vector<Token> tokens):formula(tokens),currentPos(0) {
 }
 
 bool Parser::consume(tokenType type) {
+	if((unsigned int)this->currentPos >= this->formula.size()) return false;
 	if(this->formula[this->currentPos].getType() == type) {
 		this->currentPos++;
 		return true;
@@ -13,7 +14,6 @@ bool Parser::consume(tokenType type) {
 
 AST *Parser::expression() {
 	AST *node = term();
-
 	for(;;) {
 		if(consume(plusOp)) {
 			node = new AST(PLUS_OP, node, term());
@@ -26,17 +26,24 @@ AST *Parser::expression() {
 }
 
 AST *Parser::term() {
-	AST *node = factor();
-
+	AST *node = power();
 	for(;;) {
 		if(consume(mulOp)) {
-			node = new AST(MUL_OP, node, factor());
+			node = new AST(MUL_OP, node, power());
 		} else if(consume(divOp)) {
-			node = new AST(DIV_OP, node, factor());
+			node = new AST(DIV_OP, node, power());
 		} else {
 			return node;
 		}
 	}
+}
+
+AST *Parser::power() {
+	AST *node = factor();
+	if(consume(powOp)) {
+		node = new AST(POW_OP, node, factor());
+	}
+	return node;
 }
 
 AST *Parser::factor() {

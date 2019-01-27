@@ -13,6 +13,8 @@ int Execute::exeAST(AST *ast) {
 		return exeAST(ast->getLeft()) * exeAST(ast->getRight());
 	case DIV_OP:
 		return exeAST(ast->getLeft()) / exeAST(ast->getRight());
+	case POW_OP:
+		return std::pow(exeAST(ast->getLeft()), exeAST(ast->getRight()));
 	case NUMBER:
 		return ast->getValue();
 	}

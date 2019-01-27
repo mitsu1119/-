@@ -1,6 +1,7 @@
 #pragma once
 #include "AST.h"
 #include <iostream>
+#include <cmath>
 
 class Execute {
 private:

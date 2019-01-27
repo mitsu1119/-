@@ -17,6 +17,7 @@ std::vector<Token> Lexer::lex() {
 		case '-':
 		case '*':
 		case '/':
+		case '^':
 		case '(':
 		case ')':
 			this->tokens.emplace_back(c);

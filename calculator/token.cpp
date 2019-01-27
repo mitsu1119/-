@@ -14,6 +14,9 @@ Token::Token(char str):str(std::string() + str) {
 	case '/':
 		this->type = divOp;
 		break;
+	case '^':
+		this->type = powOp;
+		break;
 	case '(':
 		this->type = lpToken;
 		break;

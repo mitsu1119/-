@@ -41,7 +41,7 @@ public:
 enum enumname { __VA_ARGS__ }; \
 static enumName enumstr(#__VA_ARGS__); 
 
-DECLARE_ENUM(tokenType, enumTokenName, number, plusOp, minusOp, mulOp, divOp, lpToken, rpToken, unknownToken);
+DECLARE_ENUM(tokenType, enumTokenName, number, plusOp, minusOp, mulOp, divOp, powOp, lpToken, rpToken, unknownToken);
 
 class Token {
 private:

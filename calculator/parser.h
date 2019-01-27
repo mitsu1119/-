@@ -12,6 +12,7 @@ private:
 	std::stack<int> stack;
 	int currentPos;
 
+	AST *power();
 	AST *expression();
 	AST *term();
 	AST *factor();

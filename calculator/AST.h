@@ -2,7 +2,7 @@
 #include <iostream>
 
 enum astType {
-	NUMBER, PLUS_OP, MINUS_OP, MUL_OP, DIV_OP
+	NUMBER, PLUS_OP, MINUS_OP, MUL_OP, DIV_OP, POW_OP
 };
 
 class AST {

@@ -1,5 +1,6 @@
 
 <expression> ::= <term> [('+' | '-') <term>]*
-<term> ::= <factor> [ ('*' | '/') <factor>]*
+<term> ::= <power> [ ('*' | '/') <power>]*
+<power> ::= <factor> | <factor> '^' <factor>
 <factor> ::= <numeric> | '(' <expression> ')'
 <numeric> ::= [1-9] [0-9]* | 0
