@@ -2,11 +2,13 @@
 #include <string>
 #include "lexer.h"
 #include "parser.h"
+#include "execute.h"
 
 int main() {
 	std::string formula;
 	Lexer *lexer;
 	Parser *parser;
+	Execute *execute;
 
 	std::cout << "Let's calculation!" << std::endl << std::endl;
 
@@ -15,11 +17,16 @@ int main() {
 		std::cin >> formula;
 
 		lexer = new Lexer(formula);
-		lexer->lexAndPrint();
+		// lexer->lexAndPrint();
 
 		parser = new Parser(lexer->lex());
-		parser->parse();
+		
+		
+		execute = new Execute(parser->parse());
 
+		std::cout << "result: " << execute->run() << std::endl;
+
+		delete execute;
 		delete parser;
 		delete lexer;
 	}

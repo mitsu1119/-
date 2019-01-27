@@ -1,7 +1,8 @@
 #pragma once
+#include <iostream>
 
 enum astType {
-	NUMBER, PULS_OP, MINUS_OP, MUL_OP, DIV_OP
+	NUMBER, PLUS_OP, MINUS_OP, MUL_OP, DIV_OP
 };
 
 class AST {
@@ -13,4 +14,9 @@ private:
 public:
 	AST(astType type, AST *left, AST *right);
 	AST(int value);
+
+	astType getType();
+	AST *getLeft() const;
+	AST *getRight() const;
+	int getValue();
 };

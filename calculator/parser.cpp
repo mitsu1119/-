@@ -16,7 +16,7 @@ AST *Parser::expression() {
 
 	for(;;) {
 		if(consume(plusOp)) {
-			node = new AST(PULS_OP, node, term());
+			node = new AST(PLUS_OP, node, term());
 		} else if(consume(minusOp)) {
 			node = new AST(MINUS_OP, node, term());
 		} else {
