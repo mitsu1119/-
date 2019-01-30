@@ -1,33 +1,25 @@
 #include "multiprecision.h"
 
 BigInt::BigInt() {
-	this->size = 1;
 	this->digit.emplace_back(0);
 }
 
 BigInt::BigInt(std::string value) {
-	if(value.size() % MAX_DIGIT_INDEX == 0) {
-		this->size = value.size() / MAX_DIGIT_INDEX;
-	} else {
-		this->size = value.size() / MAX_DIGIT_INDEX + 1;
-	}
+	this->digit = std::vector<long long>(MAX_DIGITS, 0);
 
-	this->digit = std::vector<long long>(this->size);
-
-	for(long long i = 0; i < this->size; i++) {
-		if(i == this->size  - 1) {
-			this->digit[i] = std::stoll(value);
-		} else {
-			this->digit[i] = std::stoll(value.substr(value.size() - MAX_DIGIT_INDEX, MAX_DIGIT_INDEX));
-			value.erase(value.end() - MAX_DIGIT_INDEX, value.end());
+	for(auto &digit: this->digit) {
+		if(value.size() <= MAX_DIGIT_INDEX) {
+			digit = std::stoll(value);
+			break;
 		}
+		digit = std::stoll(value.substr(value.size() - MAX_DIGIT_INDEX, MAX_DIGIT_INDEX));
+		value.erase(value.end() - MAX_DIGIT_INDEX, value.end());
 	}
 }
 
 BigInt BigInt::abs() const {
 	BigInt res;
 	res.digit = this->digit;
-	res.size = this->size;
 	return res;
 }
 
@@ -35,57 +27,61 @@ void BigInt::add(const BigInt& num) {
 	long long bufa, bufb, carry;
 	BigInt res, thisabs, numabs;
 
-	res.size = std::max(this->size, num.size);
-	res.digit = std::vector<long long>(res.size);
+	res.digit = std::vector<long long>(std::max(digit.size(), num.digit.size()), 0);
 
+	long long i;
 	carry = 0;	// åJÇËè„Ç™ÇËóp
-	for(long long i = 0; i < res.size; i++) {
-		bufa = (i < this->size) ? this->digit[i] : 0;
-		bufb = (i < num.size) ? num.digit[i] : 0;
+	for(i = 0; i < res.digit.size(); i++) {
+		bufa = digit[i];
+		bufb = num.digit[i];
 		res.digit[i] = bufa + bufb + carry;
 		carry = res.digit[i] / BASE_MULTI;
 		res.digit[i] = res.digit[i] % BASE_MULTI;
 	}
 
 	if(carry != 0) {
-		res.size++;
-		res.digit.emplace_back(carry);
+		res.digit[res.getTopIndex()] = carry;
 	}
 
 	this->digit = res.digit;
-	this->size = res.size;
 }
 
 bool BigInt::isLeftLargeRight(const BigInt& left, const BigInt& right) {
-	long long sizes = left.size - right.size;
 	long long buf;
 
-	for(long long i = left.size - 1; i>=0; i--) {
+	if(left.digit.size() > right.digit.size()) return true;
+	if(left.digit.size() < right.digit.size()) return false;
+
+	for(long long i = left.digit.size() - 1; i >= 0; i--) {
 		buf = left.digit[i] - right.digit[i];
 		if(buf > 0) return true;
 		if(buf < 0) return false;
 	}
+
 	// ìôÇµÇ¢
 	return false;
 }
 
 bool BigInt::isRightLargeLeft(const BigInt& left, const BigInt& right) {
-	long long sizes = left.size - right.size;
 	long long buf;
 
-	for(long long i = left.size - 1; i>=0; i--) {
+	if(left.digit.size() > right.digit.size()) return false;
+	if(left.digit.size() < right.digit.size()) return true;
+
+	for(long long i = left.digit.size() - 1; i >= 0; i--) {
 		buf = left.digit[i] - right.digit[i];
 		if(buf > 0) return false;
 		if(buf < 0) return true;
 	}
+
 	// ìôÇµÇ¢
 	return false;
 }
 
 bool BigInt::isEqual(const BigInt& left, const BigInt& right) {
-	if(left.size != right.size) return false;
+	if(left.digit.size() != right.digit.size()) return false;
 
-	for(long long i = left.size - 1; i>=0; i--) {
+	for(long long i = left.digit.size() - 1; i>=0; i--) {
 		if(left.digit[i] != right.digit[i]) return false;
 	}
 
@@ -93,9 +89,11 @@ bool BigInt::isEqual(const BigInt& left, const BigInt& right) {
 	return true;
 }
 
-void BigInt::print() {
-	for(long long i = this->size - 1; i>=0; i--) {
-		std::cout << this->digit[i];
+int BigInt::getTopIndex() const {
+	int buf = 0;
+	for(int i = digit.size() - 1; i >= 0; i--) {
+		if(digit[i] != 0) break;
+		buf++;
 	}
-	std::cout << std::endl;
+	return digit.size() - 1 - buf;
 }

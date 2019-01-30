@@ -13,7 +13,6 @@ constexpr long long MAX_DIGITS = 100;	// digitの数
 class BigInt {
 private:
 	std::vector<long long> digit;
-	long long size;
 
 	BigInt abs() const;
 
@@ -22,15 +21,15 @@ private:
 	static bool isRightLargeLeft(const BigInt& left, const BigInt& right);
 	static bool isEqual(const BigInt& left, const BigInt& right);
 
+	// 意味を持つ数値が格納されている一番上のインデックスを返す
+	int getTopIndex() const;
+
 public:
 	BigInt(std::string value);
 	BigInt();
 
 	BigInt& operator=(const BigInt& num) {
-		if(this != &num) {
-			this->size = num.size;
-			this->digit = num.digit;
-		}
+		if(this != &num) this->digit = num.digit;
 		return *this;
 	}
 
@@ -65,11 +64,7 @@ public:
 	}
 
 	friend std::ostream& operator<<(std::ostream &o, const BigInt &num) {
-		for(long long i = num.size - 1; i>=0; i--) {
-			o << num.digit[i];
-		}
+		for(int i = num.getTopIndex(); i >= 0; i--) o << num.digit[i];
 		return o;
 	}
-
-	void print();
 };
