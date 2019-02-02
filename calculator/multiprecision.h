@@ -4,67 +4,67 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
+#include <iomanip>
 #define NOMINMAX
 
-constexpr long long BASE_MULTI = 10000000000000000;	// base
-constexpr long long MAX_DIGIT_INDEX = 16;		// 一つの要素内の最大桁
-constexpr long long MAX_DIGITS = 100;	// digitの数
+constexpr unsigned long BASE_MULTI = 100000000;	// base
+constexpr int MAX_DIGIT_INDEX = 8;		// 一つの要素内の最大桁
+constexpr int MAX_DIGITS = 100;	// digitの数
 
 class BigInt {
 private:
-	std::vector<long long> digit;
+	std::vector<unsigned long> digits;
+	bool nan;
 
-	BigInt abs() const;
+	void resize(size_t size);
+	void pushUp(unsigned long num);
+	void pushDown(unsigned long num);
+	void rShift(size_t cnt);
+	void lShift(size_t cnt);
 
-	void add(const BigInt& num);
-	static bool isLeftLargeRight(const BigInt& left, const BigInt& right);
-	static bool isRightLargeLeft(const BigInt& left, const BigInt& right);
-	static bool isEqual(const BigInt& left, const BigInt& right);
+	// 上位桁の0を消去
+	void normalize();
 
-	// 意味を持つ数値が格納されている一番上のインデックスを返す
-	int getTopIndex() const;
+	// 演算
+	void unsignedAdd(const BigInt &num);
+	void unsignedMul(const BigInt &num);
+
+	bool isEqual(const BigInt &num) const;
 
 public:
-	BigInt(std::string value);
 	BigInt();
+	BigInt(std::string i);
 
-	BigInt& operator=(const BigInt& num) {
-		if(this != &num) this->digit = num.digit;
+	void clear();
+	bool isNan() const;
+	size_t size() const;
+
+	// operators
+	friend std::ostream &operator<<(std::ostream &os, BigInt x) {
+		if(x.isNan()) os << "NaN";
+		else {
+			os << x.digits[x.size() - 1];
+			for(int i = (int)x.size() - 2; i >= 0; i--) os << std::setw(MAX_DIGIT_INDEX) << std::setfill('0') << x.digits[i];
+		}
+		return os;
+	}
+	friend std::istream &operator>>(std::istream &is, BigInt &x) {
+		std::string s;
+		is >> s;
+		x = BigInt(s);
+		return is;
+	}
+
+	BigInt &operator+=(const BigInt &num) {
+		unsignedAdd(num);
+		return *this;
+	}
+	BigInt &operator*=(const BigInt &num) {
+		unsignedMul(num);
 		return *this;
 	}
 
-	BigInt& operator+=(const BigInt& right) {
-		add(right);
-		return *this;
-	}
-
-	friend BigInt operator+(BigInt left, const BigInt& right) {
-		left += right;
-		return left;
-	}
-
-	friend bool operator>(const BigInt& left, const BigInt& right) {
-		return isLeftLargeRight(left, right);
-	}
-
-	friend bool operator<(const BigInt& left, const BigInt& right) {
-		return isRightLargeLeft(left, right);
-	}
-
-	friend bool operator>=(const BigInt& left, const BigInt& right) {
-		return (left == right) || (left > right);
-	}
-
-	friend bool operator<=(const BigInt& left, const BigInt& right) {
-		return (left == right) || (left < right);
-	}
-
-	friend bool operator==(const BigInt& left, const BigInt& right) {
-		return isEqual(left, right);
-	}
-
-	friend std::ostream& operator<<(std::ostream &o, const BigInt &num) {
-		for(int i = num.getTopIndex(); i >= 0; i--) o << num.digit[i];
-		return o;
+	friend bool operator==(const BigInt &left, const BigInt &right) {
+		return left.isEqual(right);
 	}
 };

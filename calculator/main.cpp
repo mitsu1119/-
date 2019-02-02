@@ -15,19 +15,18 @@ int main() {
 	std::cout << "Let's calculation!" << std::endl << std::endl;
 
 	while(true) {
-		std::cout << "> ";
-		std::string test1, test2;
-
-		std::cin >> test1>> test2;
-		BigInt a(test1);
-		BigInt b(test2);
-	
+		// std::cout << "> ";
+		BigInt a, b;
+		
+		std::cout << "a: ";
+		std::cin >> a;
+		std::cout << "b: ";
+		std::cin >> b;
 		std::cout << "a: " << a << std::endl;
 		std::cout << "b: " << b << std::endl;
-		std::cout << "a+b: " << a+b << std::endl;
-		std::cout << "a>b: " << std::boolalpha << (a>b) << std::endl;
-		std::cout << "a<b: " << std::boolalpha << (a<b) << std::endl;
-		std::cout << "a==b: " << std::boolalpha << (a==b) << std::endl;
+		a *= b;
+		std::cout << "a*b: " << a << std::endl;
+
 
 		/*
 		std::cout << "> ";
