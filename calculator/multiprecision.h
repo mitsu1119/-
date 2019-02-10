@@ -9,8 +9,8 @@
 #include "fft.h"
 #define NOMINMAX
 
-constexpr unsigned long BASE_MULTI = 100000000;	// base
-constexpr int MAX_DIGIT_INDEX = 8;		// ˆê‚Â‚Ì—v‘f“à‚ÌÅ‘åŒ…
+constexpr unsigned long BASE_MULTI = 100;	// base
+constexpr int MAX_DIGIT_INDEX = 2;		// ˆê‚Â‚Ì—v‘f“à‚ÌÅ‘åŒ…
 constexpr int MAX_DIGITS = 100;	// digit‚Ì”
 
 class BigInt {
@@ -29,6 +29,9 @@ private:
 
 	// ˆê‚Â‚ÌŒ…‚Å‚ÌÅ‘å’l‚ğ’´‚¦‚Ä‚¢‚½‚çŸ‚ÌŒ…‚ğ‘«‚µ‚Ä‡‚í‚¹‚é
 	void align();
+
+	// xˆÈã‚Ì2^n‚ğ’T‚·
+	size_t getNextPow2(size_t x);
 
 	// ‰‰Z
 	void unsignedAdd(const BigInt &num);

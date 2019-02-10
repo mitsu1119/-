@@ -40,3 +40,7 @@ std::vector<Complex> FFT::ifft() {
 	for(size_t i = 0; i < this->x.size(); i++) this->x[i] /= (double)this->x.size();
 	return this->x;
 }
+
+size_t FFT::size() {
+	return this->x.size();
+}

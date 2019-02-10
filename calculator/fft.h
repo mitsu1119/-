@@ -7,7 +7,7 @@
 
 #define PI  3.141592653589793238460
 
-typedef std::complex<double> Complex;
+typedef std::complex<long double> Complex;
 
 class FFT {
 private:
@@ -22,6 +22,8 @@ public:
 	std::vector<Complex> fft();
 	std::vector<Complex> ifft();
 
+	size_t size();
+
 	// 項別演算
 	friend FFT operator*(FFT x, FFT y) {
 		size_t max = std::max(x.x.size(), y.x.size());
@@ -31,5 +33,10 @@ public:
 		}
 		
 		return FFT(mul);
+	}
+
+	// アクセス
+	Complex operator[](size_t n) {
+		return this->x[n];
 	}
 };

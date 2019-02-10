@@ -53,15 +53,21 @@ void BigInt::normalize() {
 
 void BigInt::align() {
 	for(size_t i = 0; i < this->digits.size() - 1; i++) {
-		if(this->digits[i] / BASE_MULTI != 0) {
+		if(this->digits[i] >= BASE_MULTI) {
 			this->digits[i + 1] += this->digits[i] / BASE_MULTI;
 			this->digits[i] %= BASE_MULTI;
 		}
 	}
-	if(this->digits[this->digits.size() - 1] / BASE_MULTI != 0) {
+	if(this->digits[this->digits.size() - 1] >= BASE_MULTI) {
 		this->pushUp(this->digits[this->digits.size() - 1] / BASE_MULTI);
 		this->digits[this->digits.size() - 2] %= BASE_MULTI;
 	}
+}
+
+size_t BigInt::getNextPow2(size_t x) {
+	size_t n;
+	for(n = 2; n <= x; n <<= 2);
+	return n;
 }
 
 void BigInt::unsignedAdd(const BigInt &num) {
@@ -80,6 +86,7 @@ void BigInt::unsignedAdd(const BigInt &num) {
 }
 
 // •MŽZ‚ÌƒAƒ‹ƒSƒŠƒYƒ€
+/*
 void BigInt::unsignedMul(const BigInt &num) {
 	if(isNan() || num.isNan()) return;
 
@@ -110,6 +117,41 @@ void BigInt::unsignedMul(const BigInt &num) {
 	}
 	res.normalize();
 	*this = res;
+}
+*/
+
+void BigInt::unsignedMul(const BigInt &num) {
+	if(isNan() || num.isNan()) return;
+
+	BigInt numc = num;
+
+	// Œ…”‚ð2^n‚É’¼‚·
+	size_t n = getNextPow2(std::max(size(), num.size()));
+	resize(n);
+	numc.resize(n);
+
+	std::vector<Complex> a(n);
+	std::vector<Complex> b(n);
+
+	for(size_t i = 0; i < n; i++) {
+		a[i] = this->digits[i];
+		b[i] = numc.digits[i];
+	}
+
+	FFT ffta(a);
+	FFT fftb(b);
+
+	ffta.fft();
+	fftb.fft();
+	ffta = ffta * fftb;
+	ffta.ifft();
+
+	std::vector<unsigned long> res(ffta.size());
+	for(size_t i = 0; i < res.size(); i++) res[i] = (unsigned long)ffta[i].real();
+
+	this->digits = res;
+	normalize();
+	align();
 }
 
 

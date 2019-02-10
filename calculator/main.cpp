@@ -17,23 +17,12 @@ int main() {
 	std::cout << "Let's calculation!" << std::endl;
 
 	while(true) {
-		// std::cout << "> ";
-		std::vector<Complex> a = {93, 97, 58, 53, 0, 0, 0, 0};
-		std::vector<Complex> b = {95, 27, 83, 33, 0, 0, 0, 0};
+		BigInt a, b;
+		std::cin >> a >> b;
 
-		FFT ffta(a);
-		ffta.fft();
+		a *= b;
 
-		FFT fftb(b);
-		fftb.fft();
-
-		ffta = ffta * fftb;
-
-		std::vector<Complex> c = ffta.ifft();
-
-		for(const auto &i : c) std::cout << i;
-		std::cout << std::endl;
-		while(1);
+		std::cout << a << std::endl;
 
 		/*
 		std::cout << "> ";
