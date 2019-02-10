@@ -51,6 +51,19 @@ void BigInt::normalize() {
 	}
 }
 
+void BigInt::align() {
+	for(size_t i = 0; i < this->digits.size() - 1; i++) {
+		if(this->digits[i] / BASE_MULTI != 0) {
+			this->digits[i + 1] += this->digits[i] / BASE_MULTI;
+			this->digits[i] %= BASE_MULTI;
+		}
+	}
+	if(this->digits[this->digits.size() - 1] / BASE_MULTI != 0) {
+		this->pushUp(this->digits[this->digits.size() - 1] / BASE_MULTI);
+		this->digits[this->digits.size() - 2] %= BASE_MULTI;
+	}
+}
+
 void BigInt::unsignedAdd(const BigInt &num) {
 	if(isNan() || num.isNan()) return;
 	if(num == BigInt("0")) return;
@@ -66,7 +79,7 @@ void BigInt::unsignedAdd(const BigInt &num) {
 	if(carry != 0) pushUp(carry);
 }
 
-// •MŽZ‚Ì•û–@(O(N^2)) ‚ ‚Æ‚ÅFFT‚ðŽg‚¤‚â‚Â‚É’¼‚·
+// •MŽZ‚ÌƒAƒ‹ƒSƒŠƒYƒ€
 void BigInt::unsignedMul(const BigInt &num) {
 	if(isNan() || num.isNan()) return;
 

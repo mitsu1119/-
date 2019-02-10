@@ -4,7 +4,9 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
+#include <valarray>
 #include <iomanip>
+#include "fft.h"
 #define NOMINMAX
 
 constexpr unsigned long BASE_MULTI = 100000000;	// base
@@ -24,6 +26,9 @@ private:
 
 	// ãˆÊŒ…‚Ì0‚ğÁ‹
 	void normalize();
+
+	// ˆê‚Â‚ÌŒ…‚Å‚ÌÅ‘å’l‚ğ’´‚¦‚Ä‚¢‚½‚çŸ‚ÌŒ…‚ğ‘«‚µ‚Ä‡‚í‚¹‚é
+	void align();
 
 	// ‰‰Z
 	void unsignedAdd(const BigInt &num);

@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="AST.cpp" />
     <ClCompile Include="execute.cpp" />
+    <ClCompile Include="fft.cpp" />
     <ClCompile Include="lexer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="multiprecision.cpp" />
@@ -126,6 +127,7 @@
   <ItemGroup>
     <ClInclude Include="AST.h" />
     <ClInclude Include="execute.h" />
+    <ClInclude Include="fft.h" />
     <ClInclude Include="lexer.h" />
     <ClInclude Include="multiprecision.h" />
     <ClInclude Include="parser.h" />
