@@ -11,7 +11,7 @@ void FFT::Fft(bool isInverse) {
 	for(size_t m, mh = 1; (m = mh << 1) <= n; mh = m) {
 		int irev = 0;
 		for(size_t i = 0; i < n; i += m) {
-			Complex w = std::exp(Complex(0, angle*irev));
+			Complex w = Comp::exp(Complex(0, angle*irev));
 			for(size_t k = n >> 2; k >(irev ^= k); k >>= 1);
 			for(size_t j = i; j < mh + i; j++) {
 				size_t k = j + mh;

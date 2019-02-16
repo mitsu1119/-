@@ -7,6 +7,7 @@
 #include <valarray>
 #include <iomanip>
 #include "fft.h"
+#include "Complex.h"
 #define NOMINMAX
 
 constexpr unsigned long BASE_MULTI = 100;	// base

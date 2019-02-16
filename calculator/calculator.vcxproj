@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AST.cpp" />
+    <ClCompile Include="Complex.cpp" />
     <ClCompile Include="execute.cpp" />
     <ClCompile Include="fft.cpp" />
     <ClCompile Include="lexer.cpp" />
@@ -126,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AST.h" />
+    <ClInclude Include="Complex.h" />
     <ClInclude Include="execute.h" />
     <ClInclude Include="fft.h" />
     <ClInclude Include="lexer.h" />

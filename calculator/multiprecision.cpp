@@ -125,8 +125,8 @@ void BigInt::unsignedMul(const BigInt &num) {
 
 	BigInt numc = num;
 
-	// Œ…”‚ğ2^n‚É’¼‚·
-	size_t n = getNextPow2(std::max(size(), num.size()));
+	// Œ…”‚ğ2^n‚É’¼‚µAŒã”¼‚ğ0‚Å–„‚ß‚é
+	size_t n = getNextPow2(std::max(size(), num.size())) * 2;
 	resize(n);
 	numc.resize(n);
 
@@ -147,7 +147,7 @@ void BigInt::unsignedMul(const BigInt &num) {
 	ffta.ifft();
 
 	std::vector<unsigned long> res(ffta.size());
-	for(size_t i = 0; i < res.size(); i++) res[i] = (unsigned long)ffta[i].real();
+	for(size_t i = 0; i < res.size(); i++) res[i] = (unsigned long)std::round(ffta[i].real());
 
 	this->digits = res;
 	normalize();
