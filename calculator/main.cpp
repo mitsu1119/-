@@ -17,8 +17,10 @@ int main() {
 	std::cout << "Let's calculation!" << std::endl;
 
 	while(true) {
-		BigInt a, b;
-		std::cin >> a >> b;
+		BigInt a;
+		std::cin >> a;
+		int b;
+		std::cin >> b;
 
 		a *= b;
 
